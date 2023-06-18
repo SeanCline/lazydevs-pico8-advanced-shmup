@@ -63,8 +63,16 @@ function dokeys()
   if key=="p" then
    poke(0x5f30,1)
   end
+ elseif stat(28, 76) then
+  if del_held then
+   key=nil
+  else
+   key="delete"
+   del_held=true
+  end
  else
   key=nil
+  del_held=false
  end
  
 end
@@ -259,6 +267,11 @@ function upd_type()
 	   end
 	   typecur-=1
    end
+  elseif key=="delete" then
+   --delete
+   local txt_bef=sub(typetxt,1,typecur-1)
+   local txt_aft=sub(typetxt,typecur+1)
+   typetxt=txt_bef..txt_aft
   else
    if typecur>#typetxt then
     typetxt..=key
